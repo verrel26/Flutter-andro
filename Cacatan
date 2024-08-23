@@ -1,0 +1,7 @@
+E-Commers Flutter
+
+1. Install Flutter dan buat project
+2. Edit pubspec.yaml untuk folder assets
+3. Download google font dan sesuaikan di pubspec.yaml, bagian dependencies dibawah cupertino
+4. Menambahkan file theme.dart untuk desgin yang digunakan untuk desgin
+5. 
