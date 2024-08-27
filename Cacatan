@@ -4,4 +4,15 @@ E-Commers Flutter
 2. Edit pubspec.yaml untuk folder assets
 3. Download google font dan sesuaikan di pubspec.yaml, bagian dependencies dibawah cupertino
 4. Menambahkan file theme.dart untuk desgin yang digunakan untuk desgin
-5. 
+5. Menambahkan file splash_page untuk halaman awal 
+  Login dan Register
+    6. Menambahkan file sign_in untuk halaman login
+    - Pengaturan dan penyesuaian diatur dihalaman main
+    7. Menambahkan file sign_up untuk halaman daftar
+  Tombol Bawah 
+  8. Menambahkan folder dan file home,chat,main,profile,wishlist page
+  9. Membuat halaman homepage
+  10. Membuat foler widgets difolder lib untuk widgets product atau tampilan awal
+  11. Membuat halaman chatpage
+  12. Membuat halaman chattile
+

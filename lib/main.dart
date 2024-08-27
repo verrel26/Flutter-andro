@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/pages/detail_chat_page.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/sign_in_page.dart';
+import 'package:myapp/pages/sign_up_page.dart';
+import 'pages/home/main_page.dart';
 import 'pages/splash_page.dart';
-import 'theme.dart';
+// import 'theme.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,8 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => SplashPage(),
-        '/sign-in': (context) => SignInPage(),
+        '/': (context) => const SplashPage(),
+        '/sign-in': (context) => const SignInPage(),
+        '/sign-up': (context) => const SignUpPage(),
+        '/home': (context) => const MainPage(),
+        '/detail-chat': (context) => const DetailChatPage(),
       },
     );
   }
