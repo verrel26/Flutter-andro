@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/pages/detail_chat_page.dart';
+import 'package:myapp/pages/edit_profile.dart';
+import 'package:myapp/pages/product_page.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/sign_in_page.dart';
 import 'package:myapp/pages/sign_up_page.dart';
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
         '/sign-up': (context) => const SignUpPage(),
         '/home': (context) => const MainPage(),
         '/detail-chat': (context) => const DetailChatPage(),
+        '/edit-profile': (context) => const EditProfilePage(),
+        '/product': (context) => const ProductPage(),
       },
     );
   }
