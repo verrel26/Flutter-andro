@@ -27,7 +27,7 @@ class ProductCart extends StatelessWidget {
               height: 30,
             ),
             Image.asset(
-              'assets/images/tas.png',
+              'assets/images/tas3.png',
               width: 215,
               height: 150,
               fit: BoxFit.scaleDown,
@@ -41,7 +41,7 @@ class ProductCart extends StatelessWidget {
                 children: [
                   Text(
                     'BackPack',
-                    style: secondaryTextStyle.copyWith(
+                    style: blackTextStyle.copyWith(
                       fontSize: 12,
                     ),
                   ),
@@ -51,7 +51,7 @@ class ProductCart extends StatelessWidget {
                   Text(
                     'COURT VERSION 2.0',
                     style: blackTextStyle.copyWith(
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: semiBold,
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -68,7 +68,7 @@ class ProductCart extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

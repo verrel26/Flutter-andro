@@ -11,14 +11,16 @@ class ChatTile extends StatelessWidget {
         Navigator.pushNamed(context, '/detail-chat');
       },
       child: Container(
-        margin: const EdgeInsets.only(top: 33),
+        margin: const EdgeInsets.only(top: 30),
         child: Column(
           children: [
             Row(
               children: [
-                Image.asset(
-                  'assets/images/user.png',
-                  width: 54,
+                ClipOval(
+                  child: Image.asset(
+                    'assets/images/face1.jpg',
+                    width: 50,
+                  ),
                 ),
                 const SizedBox(
                   width: 12,

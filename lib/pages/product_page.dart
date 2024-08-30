@@ -25,15 +25,98 @@ class _ProductPageState extends State<ProductPage> {
     'assets/images/tas2.png',
     'assets/images/tas3.png',
     'assets/images/tas4.png',
-    'assets/images/user.png',
-    'assets/images/package.png',
-    'assets/images/paper-plane.png',
+    'assets/images/tas5.png',
+    'assets/images/tas6.png',
+    'assets/images/tas7.png',
+    'assets/images/tas8.png',
+    'assets/images/tas9.png',
+    'assets/images/tas10.png',
   ];
 
   int curentIndex = 0;
+  // untuk like product
+  bool isWishList = false;
 
   @override
   Widget build(BuildContext context) {
+    // Fungsi Alert
+    Future<void> showSuccessDialog() async {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) => SizedBox(
+          width: MediaQuery.of(context).size.width - (2 * defaultMargin),
+          child: AlertDialog(
+            backgroundColor: backgroundColor3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.close,
+                        color: primaryTextColor,
+                      ),
+                    ),
+                  ),
+                  Image.asset(
+                    'assets/images/check.png',
+                    width: 100,
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    'Hurray :)',
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 18,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    'Item added successsfully',
+                    style: secondaryTextStyle,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: 154,
+                    height: 44,
+                    child: TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'View My Chart',
+                        style: primaryTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: medium,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     // Indikator
     Widget indicator(int index) {
       return Container(
@@ -176,9 +259,40 @@ class _ProductPageState extends State<ProductPage> {
                       ],
                     ),
                   ),
-                  Image.asset(
-                    'assets/images/favourite.png',
-                    width: 45,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isWishList = !isWishList;
+                      });
+                      // Fungsi untk love product
+                      if (isWishList) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: secondaryColor,
+                            content: const Text(
+                              'Has been added to the wishlist',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: alertColor,
+                            content: const Text(
+                              'Has been removed from the wishlist',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Image.asset(
+                      isWishList
+                          ? 'assets/images/favourite.png'
+                          : 'assets/images/favourite1.png',
+                      width: 45,
+                    ),
                   ),
                 ],
               ),
@@ -307,12 +421,17 @@ class _ProductPageState extends State<ProductPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/chat2.png'),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/detail-chat');
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/chat2.png'),
+                        ),
                       ),
                     ),
                   ),
@@ -323,7 +442,9 @@ class _ProductPageState extends State<ProductPage> {
                     child: SizedBox(
                       height: 54,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showSuccessDialog();
+                        },
                         style: TextButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
