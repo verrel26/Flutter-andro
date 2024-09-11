@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/models/product_model.dart';
 import '../theme.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
+  // const ProductPage({super.key});
+  final ProductModel product;
+  ProductPage(this.product);
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -183,12 +186,12 @@ class _ProductPageState extends State<ProductPage> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: CarouselSlider(
-              items: images
+              items: widget.product.galleries!
                   .map(
-                    (image) => Image.asset(
-                      image,
+                    (image) => Image.network(
+                      image.url,
                       width: MediaQuery.of(context).size.width,
-                      // height: 310,
+                      height: 310,
                       fit: BoxFit.fitHeight,
                     ),
                   )
@@ -207,7 +210,7 @@ class _ProductPageState extends State<ProductPage> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: images.map((e) {
+            children: widget.product.galleries.map((e) {
               index++;
               return indicator(index);
             }).toList(),
@@ -244,14 +247,14 @@ class _ProductPageState extends State<ProductPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'New Bag',
+                          widget.product.name,
                           style: primaryTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semiBold,
                           ),
                         ),
                         Text(
-                          'Bag Mom',
+                          widget.product.category.name,
                           style: secondaryTextStyle.copyWith(
                             fontSize: 14,
                           ),
@@ -321,7 +324,7 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
                   Text(
-                    '\$143,98',
+                    '\$${widget.product.price}',
                     style: priceTextStyle.copyWith(
                       fontSize: 15,
                       fontWeight: semiBold,
@@ -353,7 +356,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 13,
                   ),
                   Text(
-                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero sint aliquid deserunt ipsa ullam tenetur, distinctio cum, neque accusantium temporibus iure a ea blanditiis ipsam magnam ad consequuntur reprehenderit quidem?',
+                    widget.product.description,
                     style: secondaryTextStyle.copyWith(
                       fontWeight: light,
                     ),

@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/pages/product_page.dart';
 import 'package:myapp/theme.dart';
 
 class ProductTile extends StatelessWidget {
-  const ProductTile({super.key});
+  // const ProductTile({super.key});
+  final ProductTile product;
+  ProductTile(this.product);
 
   @override
   // Product terbaru
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductPage(product),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -21,8 +29,8 @@ class ProductTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                'assets/images/tas3.png',
+              child: Image.network(
+                product.galleries[0].url,
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -36,7 +44,7 @@ class ProductTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'BackPack',
+                  product.category.name,
                   style: secondaryTextStyle.copyWith(
                       fontSize: 15, color: const Color(0xFF757486)),
                 ),
@@ -44,15 +52,18 @@ class ProductTile extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  'BackPack mantap',
+                  product.name,
                   style: primaryTextStyle.copyWith(
-                      fontSize: 16, fontWeight: semiBold),
+                    fontSize: 16,
+                    fontWeight: semiBold,
+                  ),
+                  maxLines: 1,
                 ),
                 const SizedBox(
                   height: 6,
                 ),
                 Text(
-                  '\$68,47',
+                  '\$${product.price}',
                   style: priceTextStyle.copyWith(fontWeight: medium),
                 ),
               ],

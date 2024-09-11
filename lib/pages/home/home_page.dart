@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/user_model.dart';
+import 'package:myapp/providers/auth_provider.dart';
+import 'package:myapp/providers/product_provider.dart';
 import 'package:myapp/theme.dart';
 import 'package:myapp/widgets/product_cart.dart';
 import 'package:myapp/widgets/product_tile.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UserModel user = authProvider.user!;
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
+
     // List view untuk bisa discrol ke bawah
     Widget header() {
       return Container(
@@ -23,28 +31,30 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hallo Panjul',
+                    'Hallo ${user.name}',
                     style: primaryTextStyle.copyWith(
                       fontSize: 24,
                       fontWeight: semiBold,
                     ),
                   ),
                   Text(
-                    '@panjul',
+                    '${user.username}',
                     style: subtitleTextStyle.copyWith(
                       fontSize: 16,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             Container(
               width: 54,
               height: 54,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage('assets/images/face1.jpg'),
+                  image: NetworkImage(
+                    user.profilePhotoUrl,
+                  ),
                 ),
               ),
             )
@@ -82,69 +92,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
-              margin: const EdgeInsets.only(right: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: subtitleColor,
-                ),
-                color: transparentColor,
-              ),
-              child: Text(
-                'BackPack',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 13,
-                  fontWeight: medium,
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
-              margin: const EdgeInsets.only(right: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: subtitleColor,
-                ),
-                color: transparentColor,
-              ),
-              child: Text(
-                'Waist Bag',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 13,
-                  fontWeight: medium,
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
-              ),
-              margin: const EdgeInsets.only(right: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: subtitleColor,
-                ),
-                color: transparentColor,
-              ),
-              child: Text(
-                'All Bag',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 13,
-                  fontWeight: medium,
-                ),
-              ),
-            ),
+            // Tambahkan kategori lain...
           ],
         ),
       );
@@ -179,12 +127,12 @@ class HomePage extends StatelessWidget {
               SizedBox(
                 width: defaultMargin,
               ),
-              const Row(
-                children: [
-                  ProductCart(),
-                  ProductCart(),
-                  ProductCart(),
-                ],
+              Row(
+                children: productProvider.products
+                    .map(
+                      (product) => ProductCart(product),
+                    )
+                    .toList(),
               ),
             ],
           ),
@@ -216,13 +164,12 @@ class HomePage extends StatelessWidget {
         margin: const EdgeInsets.only(
           top: 14,
         ),
-        child: const Column(
-          children: [
-            ProductTile(),
-            ProductTile(),
-            ProductTile(),
-            ProductTile(),
-          ],
+        child: Column(
+          children: ProductProvider.newArrivalsList
+              .map(
+                (product) => ProductTile(product),
+              )
+              .toList(),
         ),
       );
     }

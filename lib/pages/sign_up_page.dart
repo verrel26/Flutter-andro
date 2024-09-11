@@ -1,11 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/widgets/loading_button.dart';
+import 'package:provider/provider.dart';
+import 'package:myapp/providers/auth_provider.dart';
 import '../theme.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
   @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController nameController = TextEditingController(text: '');
+  TextEditingController usernameController = TextEditingController(text: '');
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
+  // cek sedang login atau tidak
+  bool isloading = false;
+
+  // Widget build(BuildContext context)
+  @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignUp() async {
+      setState(() {
+        isloading = true;
+      });
+
+      if (await authProvider.register(
+        name: nameController.text,
+        username: usernameController.text,
+        email: emailController.text,
+        password: passwordController.text,
+      )) {
+        if (context.mounted) Navigator.pushNamed(context, '/home');
+        // Navigator.pushNamed(context, '/home');
+      } else {
+        // Menambahkan konfirmasi gagal daftar
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: alertColor,
+              content: const Text(
+                'Gagal Register',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+      }
+
+      setState(() {
+        isloading = false;
+      });
+    }
+
     // Header
     Widget header() {
       return Container(
@@ -71,6 +123,7 @@ class SignUpPage extends StatelessWidget {
                     Expanded(
                       child: TextFormField(
                         style: primaryTextStyle,
+                        controller: nameController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Your Full Name',
                           hintStyle: primaryTextStyle,
@@ -125,6 +178,7 @@ class SignUpPage extends StatelessWidget {
                     Expanded(
                       child: TextFormField(
                         style: primaryTextStyle,
+                        controller: usernameController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Your Full Username',
                           hintStyle: primaryTextStyle,
@@ -179,6 +233,7 @@ class SignUpPage extends StatelessWidget {
                     Expanded(
                       child: TextFormField(
                         style: primaryTextStyle,
+                        controller: emailController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Your Email Address',
                           hintStyle: primaryTextStyle,
@@ -234,6 +289,7 @@ class SignUpPage extends StatelessWidget {
                         style: primaryTextStyle,
                         // password
                         obscureText: true,
+                        controller: passwordController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Password',
                           hintStyle: primaryTextStyle,
@@ -256,9 +312,7 @@ class SignUpPage extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.only(top: 15),
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
+          onPressed: handleSignUp,
           style: TextButton.styleFrom(
             backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(
@@ -324,7 +378,8 @@ class SignUpPage extends StatelessWidget {
                   userNameInput(),
                   emailInput(),
                   passwordInput(),
-                  signUpButton(),
+                  isloading ? const LoadingButton() : signUpButton(),
+                  const Spacer(),
                   footer(),
                 ],
               ),

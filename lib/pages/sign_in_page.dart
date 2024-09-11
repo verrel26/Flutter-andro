@@ -1,17 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/providers/auth_provider.dart';
+import 'package:myapp/widgets/loading_button.dart';
+import 'package:provider/provider.dart';
 import '../theme.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
   @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
+  // cek sedang login atau tidak
+  bool isloading = false;
+  @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignIn() async {
+      setState(() {
+        isloading = true;
+      });
+
+      if (await authProvider.login(
+        email: emailController.text,
+        password: passwordController.text,
+      )) {
+        if (context.mounted) Navigator.pushNamed(context, '/home');
+      } else {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: alertColor,
+              content: const Text(
+                'Gagal Login !',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+        // Menambahkan konfirmasi gagal daftar
+      }
+
+      setState(() {
+        isloading = false;
+      });
+    }
+
     // Header
     Widget header() {
       return Container(
         margin: const EdgeInsets.only(top: 30),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Login',
@@ -71,6 +116,7 @@ class SignInPage extends StatelessWidget {
                     Expanded(
                       child: TextFormField(
                         style: primaryTextStyle,
+                        controller: emailController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Your email address',
                           hintStyle: primaryTextStyle,
@@ -126,6 +172,7 @@ class SignInPage extends StatelessWidget {
                         style: primaryTextStyle,
                         // password
                         obscureText: true,
+                        controller: passwordController,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Password',
                           hintStyle: primaryTextStyle,
@@ -148,9 +195,7 @@ class SignInPage extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
+          onPressed: handleSignIn,
           style: TextButton.styleFrom(
             backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(
@@ -214,7 +259,8 @@ class SignInPage extends StatelessWidget {
                   header(),
                   emailInput(),
                   passwordInput(),
-                  signInButton(),
+                  isloading ? const LoadingButton() : signInButton(),
+                  const Spacer(),
                   footer(),
                 ],
               ),
