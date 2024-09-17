@@ -4,7 +4,7 @@ import 'package:myapp/providers/auth_provider.dart';
 import 'package:myapp/providers/product_provider.dart';
 import 'package:myapp/theme.dart';
 import 'package:myapp/widgets/product_cart.dart';
-import 'package:myapp/widgets/product_tile.dart';
+// import 'package:myapp/widgets/product_tile.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -37,12 +37,12 @@ class HomePage extends StatelessWidget {
                       fontWeight: semiBold,
                     ),
                   ),
-                  Text(
-                    '${user.username}',
-                    style: subtitleTextStyle.copyWith(
-                      fontSize: 16,
-                    ),
-                  ),
+                  // Text(
+                  //   '${user.username}',
+                  //   style: subtitleTextStyle.copyWith(
+                  //     fontSize: 16,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -164,13 +164,13 @@ class HomePage extends StatelessWidget {
         margin: const EdgeInsets.only(
           top: 14,
         ),
-        child: Column(
-          children: ProductProvider.newArrivalsList
-              .map(
-                (product) => ProductTile(product),
-              )
-              .toList(),
-        ),
+        // child: Column(
+        //   children: ProductProvider.newArrivalsList
+        //       .map(
+        //         (product) => ProductTile(product),
+        //       )
+        //       .toList(),
+        // ),
       );
     }
 
