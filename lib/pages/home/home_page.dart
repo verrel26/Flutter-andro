@@ -4,7 +4,7 @@ import 'package:myapp/providers/auth_provider.dart';
 import 'package:myapp/providers/product_provider.dart';
 import 'package:myapp/theme.dart';
 import 'package:myapp/widgets/product_cart.dart';
-import 'package:myapp/widgets/product_tile.dart';
+// import 'package:myapp/widgets/product_tile.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -197,6 +197,7 @@ class HomePage extends StatelessWidget {
               )
               .toList(),
         ),
+
       );
     }
 
