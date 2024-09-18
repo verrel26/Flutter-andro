@@ -1,22 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:myapp/models/product_model.dart';
-import 'package:myapp/models/user_model.dart';
-import 'package:myapp/services/auth_service.dart';
 import 'package:myapp/services/product_service.dart';
 
 class ProductProvider with ChangeNotifier {
-  List<productModel> _products = [];
+  List<ProductModel> _products = [];
 
-  List<productModel> get products => _products;
+  List<ProductModel> get products => _products;
 
-  set products(List<productModel> products) {
+  set products(List<ProductModel> products) {
     _products = products;
     notifyListeners();
   }
 
   Future<void> getProducts() async {
     try {
-      List<productModel> products = await ProductService().getProducts();
+      List<ProductModel> products = await ProductService().getProducts();
+      _products = products;
     } catch (e) {
       print(e);
     }

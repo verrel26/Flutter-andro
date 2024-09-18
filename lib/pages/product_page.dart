@@ -6,7 +6,7 @@ import '../theme.dart';
 class ProductPage extends StatefulWidget {
   // const ProductPage({super.key});
   final ProductModel product;
-  ProductPage(this.product);
+  const ProductPage(this.product, {super.key});
 
   @override
   State<ProductPage> createState() => _ProductPageState();
@@ -121,19 +121,19 @@ class _ProductPageState extends State<ProductPage> {
     }
 
     // Indikator
-    Widget indicator(int index) {
-      return Container(
-        width: curentIndex == index ? 16 : 4,
-        height: 4,
-        margin: const EdgeInsets.symmetric(
-          horizontal: 3,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: curentIndex == index ? primaryColor : const Color(0xffC4C4C4),
-        ),
-      );
-    }
+    // Widget indicator(index) {
+    //   return Container(
+    //     width: curentIndex == index ? 16 : 4,
+    //     height: 4,
+    //     margin: const EdgeInsets.symmetric(
+    //       horizontal: 3,
+    //     ),
+    //     decoration: BoxDecoration(
+    //       borderRadius: BorderRadius.circular(10),
+    //       color: curentIndex == index ? primaryColor : const Color(0xffC4C4C4),
+    //     ),
+    //   );
+    // }
 
     // FamiliarBag
     Widget familiarBagCard(String imageUrl) {
@@ -155,7 +155,6 @@ class _ProductPageState extends State<ProductPage> {
 
     // Header
     Widget header() {
-      int index = -1;
       return Column(
         children: [
           Container(
@@ -189,7 +188,7 @@ class _ProductPageState extends State<ProductPage> {
               items: widget.product.galleries!
                   .map(
                     (image) => Image.network(
-                      image.url,
+                      image.url!,
                       width: MediaQuery.of(context).size.width,
                       height: 310,
                       fit: BoxFit.fitHeight,
@@ -208,13 +207,14 @@ class _ProductPageState extends State<ProductPage> {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: widget.product.galleries.map((e) {
-              index++;
-              return indicator(index);
-            }).toList(),
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: widget.product.galleries.map!,
+          //   ((e) {
+          //     index++;
+          //     return indicator(index);
+          //   }).toList(),
+          // ),
         ],
       );
     }
@@ -247,18 +247,18 @@ class _ProductPageState extends State<ProductPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.product.name,
+                          widget.product.name!,
                           style: primaryTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semiBold,
                           ),
                         ),
-                        Text(
-                          widget.product.category.name,
-                          style: secondaryTextStyle.copyWith(
-                            fontSize: 14,
-                          ),
-                        ),
+                        // Text(
+                        //   widget.product.category.name!,
+                        //   style: secondaryTextStyle.copyWith(
+                        //     fontSize: 14,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -356,7 +356,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 13,
                   ),
                   Text(
-                    widget.product.description,
+                    widget.product.description!,
                     style: secondaryTextStyle.copyWith(
                       fontWeight: light,
                     ),

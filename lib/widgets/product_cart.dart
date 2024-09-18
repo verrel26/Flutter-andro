@@ -6,8 +6,8 @@ import 'package:myapp/theme.dart';
 class ProductCart extends StatelessWidget {
   // const ProductCart({super.key});
 
-  final productModel product;
-  ProductCart(this.product);
+  final ProductModel product;
+  const ProductCart(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class ProductCart extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.category.name,
+                    product.category!.name!,
                     style: blackTextStyle.copyWith(
                       fontSize: 12,
                     ),
@@ -59,7 +59,7 @@ class ProductCart extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    product.name,
+                    product.name!,
                     style: blackTextStyle.copyWith(
                       fontSize: 14,
                       fontWeight: semiBold,
@@ -71,7 +71,7 @@ class ProductCart extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    '\${product.price }',
+                    '\$${product.price}',
                     style: priceTextStyle.copyWith(
                       fontSize: 14,
                       fontWeight: medium,

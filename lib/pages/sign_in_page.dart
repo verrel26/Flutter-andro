@@ -13,23 +13,28 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   TextEditingController emailController = TextEditingController(text: '');
+
   TextEditingController passwordController = TextEditingController(text: '');
 
   // cek sedang login atau tidak
   bool isloading = false;
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     handleSignIn() async {
+      // print('ok');
       setState(() {
         isloading = true;
       });
 
-      if (await authProvider.login(
+      final handelLogin = await authProvider.login(
         email: emailController.text,
         password: passwordController.text,
-      )) {
+      );
+      // print(handelLogin);
+      if (handelLogin) {
         if (context.mounted) Navigator.pushNamed(context, '/home');
       } else {
         if (context.mounted) {
@@ -260,7 +265,6 @@ class _SignInPageState extends State<SignInPage> {
                   emailInput(),
                   passwordInput(),
                   isloading ? const LoadingButton() : signInButton(),
-                  const Spacer(),
                   footer(),
                 ],
               ),

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/pages/product_page.dart';
 import 'package:myapp/theme.dart';
+import 'package:myapp/models/product_model.dart'; // Pastikan Anda mengimpor model yang benar
 
 class ProductTile extends StatelessWidget {
-  // const ProductTile({super.key});
-  final ProductTile product;
-  ProductTile(this.product);
+  final ProductModel product; // Ubah tipe data ke ProductModel
+  const ProductTile(this.product, {super.key});
 
   @override
-  // Product terbaru
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductPage(product),
+            builder: (context) =>
+                ProductPage(product), // Pastikan ProductModel dikirim
           ),
         );
       },
@@ -30,7 +30,8 @@ class ProductTile extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                product.galleries[0].url,
+                product.galleries![0]
+                    .url!, // Sesuaikan akses ke properti ProductModel
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -44,7 +45,7 @@ class ProductTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  product.category.name,
+                  product.category!.name!,
                   style: secondaryTextStyle.copyWith(
                       fontSize: 15, color: const Color(0xFF757486)),
                 ),
@@ -52,7 +53,7 @@ class ProductTile extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  product.name,
+                  product.name!,
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: semiBold,

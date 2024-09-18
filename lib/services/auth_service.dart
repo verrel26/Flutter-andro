@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:myapp/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  String baseUrl = 'https://7ac9-103-141-74-10.ngrok-free.app/api';
+  String baseUrl = 'https://2230-103-141-74-10.ngrok-free.app/api';
 
   Future<UserModel> register({
     required String name,
@@ -28,14 +27,15 @@ class AuthService {
       body: body,
     );
 
-    if (kDebugMode) {
-      print(response.body);
-    }
+    // print(response.statusCode);
+    // print(response.body);
+    print(jsonDecode(response.body)['data']);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];
-      UserModel user = UserModel.fromJson(data['user']);
-      user.token = 'Bearer ${data['access_token']}'; // Spasi setelah Bearer
+      // UserModel user = UserModel.fromJson(data['user']);
+      UserModel user = UserModel.fromJson(data);
+      // user.token = 'Bearer ${data['access_token']}'; // Spasi setelah Bearer
 
       return user;
     } else {
@@ -48,7 +48,7 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    var url = Uri.parse('$baseUrl/login'); // Ubah string URL menjadi Uri
+    var url = Uri.parse('$baseUrl/login'); // Ubah string URL menjadi Url
     var headers = {'Content-Type': 'application/json'};
     var body = jsonEncode({
       'email': email,
@@ -61,14 +61,12 @@ class AuthService {
       headers: headers,
       body: body,
     );
-    if (kDebugMode) {
-      print(response.body);
-    }
+
+    print(jsonDecode(response.body)['data']);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];
-      UserModel user = UserModel.fromJson(data['user']);
-      user.token = 'Bearer ${data['access_token']}'; // Spasi setelah Bearer
+      UserModel user = UserModel.fromJson(data);
 
       return user;
     } else {

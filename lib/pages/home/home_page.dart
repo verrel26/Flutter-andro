@@ -13,7 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
     UserModel user = authProvider.user!;
+
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
 
     // List view untuk bisa discrol ke bawah
@@ -37,12 +39,12 @@ class HomePage extends StatelessWidget {
                       fontWeight: semiBold,
                     ),
                   ),
-                  // Text(
-                  //   '${user.username}',
-                  //   style: subtitleTextStyle.copyWith(
-                  //     fontSize: 16,
-                  //   ),
-                  // ),
+                  Text(
+                    user.username,
+                    style: subtitleTextStyle.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -65,6 +67,8 @@ class HomePage extends StatelessWidget {
 
     // Categories
     Widget categories() {
+      final productProvider = Provider.of<ProductProvider>(context);
+
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -85,7 +89,7 @@ class HomePage extends StatelessWidget {
                 color: primaryColor,
               ),
               child: Text(
-                'All Bag',
+                'All Product',
                 style: primaryTextStyle.copyWith(
                   fontSize: 13,
                   fontWeight: medium,
@@ -93,6 +97,28 @@ class HomePage extends StatelessWidget {
               ),
             ),
             // Tambahkan kategori lain...
+            Row(
+              children: productProvider.categories.map((category) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  margin: const EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: primaryColor,
+                  ),
+                  child: Text(
+                    category.name, // Menampilkan nama kategori
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 13,
+                      fontWeight: medium,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           ],
         ),
       );
@@ -164,13 +190,14 @@ class HomePage extends StatelessWidget {
         margin: const EdgeInsets.only(
           top: 14,
         ),
-        // child: Column(
-        //   children: ProductProvider.newArrivalsList
-        //       .map(
-        //         (product) => ProductTile(product),
-        //       )
-        //       .toList(),
-        // ),
+        child: Column(
+          children: productProvider.products
+              .map(
+                (product) => ProductTile(product),
+              )
+              .toList(),
+        ),
+
       );
     }
 
