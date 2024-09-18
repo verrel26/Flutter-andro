@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:myapp/providers/product_provider.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +20,12 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   getInit() async {
-    Provider.of<ProductProvider>(context, listen: false).getProducts();
+    await Provider.of<ProductProvider>(context, listen: false).getProducts();
     Navigator.pushNamed(context, '/sign-in');
+    // await Future.delayed(const Duration(seconds: 3));
+
+    // if (mounted) {
+    // }
   }
 
   @override

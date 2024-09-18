@@ -20,3 +20,18 @@ E-Commers Flutter
   15. Membuat halaman product page
 16. Menambahkan User model,provider,http (Menggabungkan dengan API)
 
+
+GITHUB
+1. Update file ke GITHUB    
+    - git status
+    - git add .
+    - git commit -m "pesan yang diupdate"
+    - git push origin UpdateAndro
+
+2. Mengambil file yang sudah diupdate dari GITHUB
+    - git clone link
+    - cd folder
+    - flutter pub get 
+    - code .
+    - git stash
+    - git checkout (nama branch)

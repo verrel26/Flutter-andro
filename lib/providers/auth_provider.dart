@@ -7,8 +7,8 @@ class AuthProvider with ChangeNotifier {
 
   UserModel? get user => _user;
 
-  set user(UserModel? newUser) {
-    _user = newUser;
+  set user(UserModel? user) {
+    _user = user;
     notifyListeners();
   }
 
@@ -38,8 +38,8 @@ class AuthProvider with ChangeNotifier {
 
 // LOGIN
   Future<bool> login({
-    required String email,
-    required String password,
+    required email,
+    required password,
   }) async {
     try {
       UserModel user = await AuthService().login(
@@ -52,9 +52,8 @@ class AuthProvider with ChangeNotifier {
       _user = user;
       return true;
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      print(e);
+
       return false;
     }
   }

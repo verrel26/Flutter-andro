@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:myapp/models/product_model.dart';
+import 'package:myapp/models/category_model.dart';
 
-class ProductService {
+class CategoryService {
   String baseUrl = 'https://2230-103-141-74-10.ngrok-free.app/api';
 
-  Future<List<ProductModel>> getProducts() async {
-    var url = Uri.parse('$baseUrl/products');
+  Future<List<CategoryModel>> getProducts() async {
+    var url = Uri.parse('$baseUrl/categories');
     var headers = {'Content-Type': 'application/json'};
 
     var response = await http.get(url, headers: headers);
@@ -15,13 +15,13 @@ class ProductService {
 
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body)['data']['data'];
-      List<ProductModel> products = [];
+      List<CategoryModel> categories = [];
 
       for (var item in data) {
-        products.add(ProductModel.fromJson(item));
+        categories.add(CategoryModel.fromJson(item));
       }
 
-      return products;
+      return categories;
     } else {
       throw Exception('Gagal mengambil data');
     }

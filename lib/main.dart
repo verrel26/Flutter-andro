@@ -4,7 +4,6 @@ import 'package:myapp/pages/checkout_page.dart';
 import 'package:myapp/pages/checkout_success_page.dart';
 import 'package:myapp/pages/detail_chat_page.dart';
 import 'package:myapp/pages/edit_profile.dart';
-import 'package:myapp/pages/product_page.dart';
 import 'package:myapp/pages/sign_in_page.dart';
 import 'package:myapp/pages/sign_up_page.dart';
 import 'package:myapp/providers/auth_provider.dart';
@@ -42,6 +41,7 @@ class MyApp extends StatelessWidget {
           '/checkout': (context) => const CheckoutPage(),
           '/checkout-success': (context) => const CheckoutSuccessPage(),
         },
+        initialRoute: '/',
       ),
     );
   }
