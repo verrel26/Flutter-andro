@@ -9,6 +9,10 @@ class ProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('produk image:');
+    print(
+      product.galleries![0].url!,
+    );
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -30,11 +34,13 @@ class ProductTile extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                product.galleries![0]
-                    .url!, // Sesuaikan akses ke properti ProductModel
-                width: 120,
-                height: 120,
+                product.galleries![0].url!,
+                width: 100,
+                height: 100,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, StackTrace) {
+                  return Icon(Icons.error);
+                },
               ),
             ),
             const SizedBox(

@@ -31,16 +31,19 @@ class ProductCart extends StatelessWidget {
           color: const Color(0xffECEDEF),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
               height: 30,
             ),
             Image.network(
               product.galleries![0].url!,
-              width: 215,
-              height: 150,
+              // width: 100,
+              height: MediaQuery.of(context).size.height * 0.15,
               fit: BoxFit.scaleDown,
+              errorBuilder: (context, error, StackTrace) {
+                return Icon(Icons.error);
+              },
             ),
             Container(
               margin: const EdgeInsets.symmetric(

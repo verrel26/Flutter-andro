@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/models/user_model.dart';
 import 'package:myapp/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/svg.dart';
 import '../theme.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -157,13 +158,14 @@ class EditProfilePage extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   image: NetworkImage(
                     user.profilePhotoUrl,
                   ),
                 ),
               ),
             ),
+            SvgPicture.network(user.profilePhotoUrl),
             nameInput(),
             usernameInput(),
             emailInput(),

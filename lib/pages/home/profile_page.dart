@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myapp/models/user_model.dart';
 import 'package:myapp/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -24,10 +25,13 @@ class ProfilePage extends StatelessWidget {
             ),
             child: Row(
               children: [
-                ClipOval(
-                  child: Image.network(
-                    user.profilePhotoUrl,
-                    width: 65,
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: ClipOval(
+                    child: SvgPicture.network(
+                      user.profilePhotoUrl,
+                      width: 50,
+                    ),
                   ),
                 ),
                 Expanded(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myapp/models/user_model.dart';
 import 'package:myapp/providers/auth_provider.dart';
 import 'package:myapp/providers/product_provider.dart';
 import 'package:myapp/theme.dart';
 import 'package:myapp/widgets/product_cart.dart';
-// import 'package:myapp/widgets/product_tile.dart';
+import 'package:myapp/widgets/product_tile.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,6 +16,9 @@ class HomePage extends StatelessWidget {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     UserModel user = authProvider.user!;
+
+    print('profile: ');
+    print(user.profilePhotoUrl);
 
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
 
@@ -33,7 +37,7 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hallo ${user.name}',
+                    'Hallo xx ${user.name}',
                     style: primaryTextStyle.copyWith(
                       fontSize: 24,
                       fontWeight: semiBold,
@@ -53,13 +57,26 @@ class HomePage extends StatelessWidget {
               height: 54,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: NetworkImage(
-                    user.profilePhotoUrl,
-                  ),
+                image: user.profilePhotoUrl != false &&
+                        user.profilePhotoUrl.isNotEmpty
+                    ? DecorationImage(
+                        image: NetworkImage(
+                          user.profilePhotoUrl,
+                        ),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
+                color: Colors.blue,
+                border: Border.all(
+                  color: subtitleColor,
                 ),
               ),
-            )
+              child:
+                  user.profilePhotoUrl == false || user.profilePhotoUrl.isEmpty
+                      ? Icon(Icons.person)
+                      : null,
+            ),
+            SvgPicture.network(user.profilePhotoUrl),
           ],
         ),
       );
@@ -67,7 +84,7 @@ class HomePage extends StatelessWidget {
 
     // Categories
     Widget categories() {
-      final productProvider = Provider.of<ProductProvider>(context);
+      // final productProvider = Provider.of<ProductProvider>(context);
 
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -97,28 +114,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             // Tambahkan kategori lain...
-            Row(
-              children: productProvider.categories.map((category) {
-                return Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  margin: const EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: primaryColor,
-                  ),
-                  child: Text(
-                    category.name, // Menampilkan nama kategori
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
           ],
         ),
       );
@@ -197,7 +192,6 @@ class HomePage extends StatelessWidget {
               )
               .toList(),
         ),
-
       );
     }
 
