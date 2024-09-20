@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:myapp/models/category_model.dart';
 
 class CategoryService {
-  String baseUrl = 'https://3edd-103-141-74-10.ngrok-free.app/api';
+  String baseUrl = 'https://0ee1-103-141-74-10.ngrok-free.app/api';
 
-  Future<List<CategoryModel>> getProducts() async {
+  Future<List<CategoryModel>> getCategories() async {
     var url = Uri.parse('$baseUrl/categories');
     var headers = {'Content-Type': 'application/json'};
 

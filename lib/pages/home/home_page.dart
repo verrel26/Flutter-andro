@@ -1,11 +1,15 @@
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+// import 'package:myapp/models/category_model.dart';
 import 'package:myapp/models/user_model.dart';
 import 'package:myapp/providers/auth_provider.dart';
+// import 'package:myapp/providers/category_provider.dart';
 import 'package:myapp/providers/product_provider.dart';
 import 'package:myapp/theme.dart';
 import 'package:myapp/widgets/product_cart.dart';
 import 'package:myapp/widgets/product_tile.dart';
+// import 'package:myapp/widgets/category_cart.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,13 +18,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
-
     UserModel user = authProvider.user!;
 
-    print('profile: ');
-    print(user.profilePhotoUrl);
-
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
+
+    // print('profile: ');
+    // print(user.profilePhotoUrl);
 
     // List view untuk bisa discrol ke bawah
     Widget header() {
@@ -52,31 +55,14 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: user.profilePhotoUrl != false &&
-                        user.profilePhotoUrl.isNotEmpty
-                    ? DecorationImage(
-                        image: NetworkImage(
-                          user.profilePhotoUrl,
-                        ),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-                color: Colors.blue,
-                border: Border.all(
-                  color: subtitleColor,
-                ),
+            ClipOval(
+              child: SvgPicture.network(
+                user.profilePhotoUrl,
+                width: 55,
+                height: 55,
+                fit: BoxFit.cover,
               ),
-              child:
-                  user.profilePhotoUrl == false || user.profilePhotoUrl.isEmpty
-                      ? Icon(Icons.person)
-                      : null,
-            ),
-            SvgPicture.network(user.profilePhotoUrl),
+            )
           ],
         ),
       );
@@ -84,7 +70,7 @@ class HomePage extends StatelessWidget {
 
     // Categories
     Widget categories() {
-      // final productProvider = Provider.of<ProductProvider>(context);
+      // final categoryProvider = Provider.of<CategoryProvider>(context);
 
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -119,7 +105,7 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    // Popular Product Title
+    // Popular Product Title/Judul
     Widget popularProductsTitle() {
       return Container(
         margin: EdgeInsets.only(

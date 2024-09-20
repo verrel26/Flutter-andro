@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/models/product_model.dart';
+import 'package:myapp/providers/wishlist_provider.dart';
+import 'package:provider/provider.dart';
 import '../theme.dart';
 
 class ProductPage extends StatefulWidget {
@@ -38,10 +40,12 @@ class _ProductPageState extends State<ProductPage> {
 
   int curentIndex = 0;
   // untuk like product
-  bool isWishList = false;
+  // bool isWishList = false;
 
   @override
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+
     // Fungsi Alert
     Future<void> showSuccessDialog() async {
       return showDialog(
@@ -264,39 +268,29 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isWishList = !isWishList;
-                      });
-                      // Fungsi untk love product
-                      if (isWishList) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: secondaryColor,
-                            content: const Text(
-                              'Has been added to the wishlist',
-                              textAlign: TextAlign.center,
-                            ),
+                      bool isAdded =
+                          wishlistProvider.setProduct(widget.product);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor:
+                              isAdded ? secondaryColor : alertColor,
+                          content: Text(
+                            isAdded
+                                ? 'Has been added to the wishlist'
+                                : 'Has been removed from the wishlist',
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: alertColor,
-                            content: const Text(
-                              'Has been removed from the wishlist',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
-                      }
+                        ),
+                      );
                     },
                     child: Image.asset(
-                      isWishList
+                      wishlistProvider.isWishlist(widget.product)
                           ? 'assets/images/favourite.png'
                           : 'assets/images/favourite1.png',
                       width: 45,
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

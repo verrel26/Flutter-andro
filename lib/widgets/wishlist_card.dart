@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/product_model.dart';
+import 'package:myapp/providers/wishlist_provider.dart';
+import 'package:provider/provider.dart';
 import '../theme.dart';
 
 class WishlistCard extends StatelessWidget {
-  const WishlistCard({super.key});
+  // const WishlistCard({super.key});
+
+  final ProductModel product;
+  WishlistCard(this.product);
 
   @override
   Widget build(BuildContext context) {
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+
     return Container(
       margin: const EdgeInsets.only(
         top: 20,
@@ -24,8 +32,8 @@ class WishlistCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              'assets/images/tas3.png',
+            child: Image.network(
+              product.galleries![0].url!,
               width: 60,
             ),
           ),
@@ -37,21 +45,26 @@ class WishlistCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Tas baru ',
+                  product.name!,
                   style: primaryTextStyle.copyWith(
                     fontWeight: semiBold,
                   ),
                 ),
                 Text(
-                  '\$143,98',
+                  '\${$product.price}',
                   style: priceTextStyle,
                 ),
               ],
             ),
           ),
-          Image.asset(
-            'assets/images/package.png',
-            width: 34,
+          GestureDetector(
+            onTap: () {
+              wishlistProvider.setProduct(product);
+            },
+            child: Image.asset(
+              'assets/images/package.png',
+              width: 34,
+            ),
           )
         ],
       ),

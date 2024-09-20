@@ -3,7 +3,7 @@ import 'package:myapp/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  String baseUrl = 'https://3edd-103-141-74-10.ngrok-free.app/api';
+  String baseUrl = 'https://0ee1-103-141-74-10.ngrok-free.app/api';
 
   Future<UserModel> register({
     required String name,
