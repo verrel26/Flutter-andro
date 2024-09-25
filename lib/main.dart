@@ -1,22 +1,63 @@
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/pages/cart_page.dart';
+import 'package:myapp/pages/checkout_page.dart';
+import 'package:myapp/pages/checkout_success_page.dart';
+// import 'package:myapp/pages/detail_chat_page.dart';
+import 'package:myapp/pages/edit_profile.dart';
 import 'package:myapp/pages/sign_in_page.dart';
+import 'package:myapp/pages/sign_up_page.dart';
+import 'package:myapp/providers/auth_provider.dart';
+import 'package:myapp/providers/cart_provider.dart';
+import 'package:myapp/providers/product_provider.dart';
+import 'package:myapp/providers/transaction_provider.dart';
+// import 'package:myapp/providers/category_provider.dart';
+import 'package:myapp/providers/wishlist_provider.dart';
+import 'pages/home/main_page.dart';
 import 'pages/splash_page.dart';
-import 'theme.dart';
+import 'package:provider/provider.dart';
+// import 'firebase_options.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => SplashPage(),
-        '/sign-in': (context) => SignInPage(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProductProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WishlistProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TransactionProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (context) => const SplashPage(),
+          '/sign-in': (context) => const SignInPage(),
+          '/sign-up': (context) => const SignUpPage(),
+          '/home': (context) => const MainPage(),
+          // '/detail-chat': (context) => const DetailChatPage(),
+          '/edit-profile': (context) => const EditProfilePage(),
+          '/cart': (context) => const CartPage(),
+          '/checkout': (context) => CheckoutPage(),
+          '/checkout-success': (context) => const CheckoutSuccessPage(),
+        },
+        initialRoute: '/',
+      ),
     );
   }
 }

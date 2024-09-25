@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "155617087028",
+    "project_id": "reset-fba5f",
+    "storage_bucket": "reset-fba5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155617087028:android:191244b3e382c5645f8461",
+        "android_client_info": {
+          "package_name": "com.reset.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLrlaEEGd5-Qhaz9Z3LxuxlHWLQP8Gcx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

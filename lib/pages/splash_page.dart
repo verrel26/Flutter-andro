@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 import '../theme.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    // Membuat masuk ke halaman awal 3 detik baru masuk ke halaman login
+    getInit();
+
+    super.initState();
+  }
+
+  getInit() async {
+    await Provider.of<ProductProvider>(context, listen: false).getProducts();
+    Navigator.pushNamed(context, '/sign-in');
+    // await Future.delayed(const Duration(seconds: 3));
+
+    // if (mounted) {
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +36,7 @@ class SplashPage extends StatelessWidget {
         child: Container(
           width: 130,
           height: 150,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
                 'assets/images/mobil.png',
