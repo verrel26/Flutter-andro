@@ -1,20 +1,24 @@
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/pages/cart_page.dart';
 import 'package:myapp/pages/checkout_page.dart';
 import 'package:myapp/pages/checkout_success_page.dart';
-import 'package:myapp/pages/detail_chat_page.dart';
+// import 'package:myapp/pages/detail_chat_page.dart';
 import 'package:myapp/pages/edit_profile.dart';
 import 'package:myapp/pages/sign_in_page.dart';
 import 'package:myapp/pages/sign_up_page.dart';
 import 'package:myapp/providers/auth_provider.dart';
+import 'package:myapp/providers/cart_provider.dart';
 import 'package:myapp/providers/product_provider.dart';
+import 'package:myapp/providers/transaction_provider.dart';
 // import 'package:myapp/providers/category_provider.dart';
 import 'package:myapp/providers/wishlist_provider.dart';
 import 'pages/home/main_page.dart';
 import 'pages/splash_page.dart';
 import 'package:provider/provider.dart';
+// import 'firebase_options.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,6 +36,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => WishlistProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TransactionProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -40,10 +50,10 @@ class MyApp extends StatelessWidget {
           '/sign-in': (context) => const SignInPage(),
           '/sign-up': (context) => const SignUpPage(),
           '/home': (context) => const MainPage(),
-          '/detail-chat': (context) => const DetailChatPage(),
+          // '/detail-chat': (context) => const DetailChatPage(),
           '/edit-profile': (context) => const EditProfilePage(),
           '/cart': (context) => const CartPage(),
-          '/checkout': (context) => const CheckoutPage(),
+          '/checkout': (context) => CheckoutPage(),
           '/checkout-success': (context) => const CheckoutSuccessPage(),
         },
         initialRoute: '/',

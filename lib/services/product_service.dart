@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:myapp/models/product_model.dart';
 
 class ProductService {
-  String baseUrl = 'https://0ee1-103-141-74-10.ngrok-free.app/api';
+  String baseUrl = 'http://103.141.75.29:8080/api';
 
   Future<List<ProductModel>> getProducts() async {
     var url = Uri.parse('$baseUrl/products');

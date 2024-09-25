@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 import '../theme.dart';
 import 'package:myapp/widgets/cart_card.dart';
 
@@ -7,6 +9,8 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     // HEADER
     PreferredSizeWidget header() {
       return AppBar(
@@ -21,64 +25,64 @@ class CartPage extends StatelessWidget {
     }
 
     // EMPTY CART
-    // Widget emptyCart() {
-    //   return Center(
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         Image.asset(
-    //           'assets/images/shopping-cart.png',
-    //           width: 80,
-    //         ),
-    //         const SizedBox(
-    //           height: 20,
-    //         ),
-    //         Text(
-    //           'Opss ! Your Cart is Empty',
-    //           style: primaryTextStyle.copyWith(
-    //             fontSize: 16,
-    //             fontWeight: medium,
-    //           ),
-    //         ),
-    //         const SizedBox(
-    //           height: 12,
-    //         ),
-    //         Text(
-    //           'Let\'s find your favorite bag',
-    //           style: secondaryTextStyle.copyWith(
-    //             fontSize: 13,
-    //           ),
-    //         ),
-    //         Container(
-    //           height: 60,
-    //           width: 150,
-    //           margin: const EdgeInsets.only(
-    //             top: 20,
-    //           ),
-    //           child: TextButton(
-    //             onPressed: () {
-    //               Navigator.pushNamedAndRemoveUntil(
-    //                   context, '/home', (route) => false);
-    //             },
-    //             style: TextButton.styleFrom(
-    //               backgroundColor: primaryColor,
-    //               shape: RoundedRectangleBorder(
-    //                 borderRadius: BorderRadius.circular(12),
-    //               ),
-    //             ),
-    //             child: Text(
-    //               'Explore Store',
-    //               style: primaryTextStyle.copyWith(
-    //                 fontSize: 16,
-    //                 fontWeight: medium,
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
+    Widget emptyCart() {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/shopping-cart.png',
+              width: 80,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Opss ! Your Cart is Empty',
+              style: primaryTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: medium,
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Text(
+              'Let\'s find your favorite bag',
+              style: secondaryTextStyle.copyWith(
+                fontSize: 13,
+              ),
+            ),
+            Container(
+              height: 60,
+              width: 150,
+              margin: const EdgeInsets.only(
+                top: 20,
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/home', (route) => false);
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  'Explore Store',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 16,
+                    fontWeight: medium,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     // JIKA ADA CART (Content)
     Widget content() {
@@ -86,9 +90,11 @@ class CartPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: defaultMargin,
         ),
-        children: const [
-          CartCard(),
-        ],
+        children: cartProvider.carts
+            .map(
+              (cart) => CartCard(cart),
+            )
+            .toList(),
       );
     }
 
@@ -110,7 +116,7 @@ class CartPage extends StatelessWidget {
                     style: primaryTextStyle,
                   ),
                   Text(
-                    '\$287,96',
+                    '\$${cartProvider.totalPrice()}',
                     style: priceTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: semiBold,
@@ -171,9 +177,9 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor3,
       appBar: header(),
-      // body: emptyCart(),
-      body: content(),
-      bottomNavigationBar: customBottomNav(),
+      body: cartProvider.carts.length == 0 ? emptyCart() : content(),
+      bottomNavigationBar:
+          cartProvider.carts.length == 0 ? SizedBox() : customBottomNav(),
     );
   }
 }

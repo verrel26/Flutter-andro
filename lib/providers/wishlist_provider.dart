@@ -15,14 +15,13 @@ class WishlistProvider with ChangeNotifier {
   }
 
   // Menambah atau menghapus product dari wishlist
-  void setProduct(ProductModel product) {
+  setProduct(ProductModel product) {
     if (!isWishlist(product)) {
       _wishlist.add(product);
       notifyListeners();
-      return true;
     } else {
       _wishlist.removeWhere((element) => element.id == product.id);
-      return false; // gunakan huruf kecil pada element
+      // return false; // gunakan huruf kecil pada element
     }
 
     notifyListeners();

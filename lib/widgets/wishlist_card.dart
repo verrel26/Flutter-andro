@@ -51,7 +51,7 @@ class WishlistCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\${$product.price}',
+                  '\$${product.price}',
                   style: priceTextStyle,
                 ),
               ],

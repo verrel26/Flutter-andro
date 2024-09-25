@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/models/product_model.dart';
+import 'package:myapp/pages/detail_chat_page.dart';
+import 'package:myapp/providers/cart_provider.dart';
 import 'package:myapp/providers/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 import '../theme.dart';
@@ -46,6 +48,8 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
 
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     // Fungsi Alert
     Future<void> showSuccessDialog() async {
       return showDialog(
@@ -80,7 +84,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 12,
                   ),
                   Text(
-                    'Hurray :)',
+                    'Hurray Success',
                     style: primaryTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: semiBold,
@@ -100,7 +104,9 @@ class _ProductPageState extends State<ProductPage> {
                     width: 154,
                     height: 44,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/cart');
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: primaryColor,
                         shape: RoundedRectangleBorder(
@@ -108,7 +114,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       ),
                       child: Text(
-                        'View My Chart',
+                        'View My Chart xxx',
                         style: primaryTextStyle.copyWith(
                           fontSize: 16,
                           fontWeight: medium,
@@ -258,7 +264,7 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                         ),
                         // Text(
-                        //   widget.product.category.name!,
+                        //   widget.product.category.id!,
                         //   style: secondaryTextStyle.copyWith(
                         //     fontSize: 14,
                         //   ),
@@ -268,6 +274,7 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      // Tambahkan atau hapus dari wishlist
                       bool isAdded =
                           wishlistProvider.setProduct(widget.product);
 
@@ -420,7 +427,12 @@ class _ProductPageState extends State<ProductPage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/detail-chat');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailChatPage(widget.product),
+                        ),
+                      );
                     },
                     child: Container(
                       width: 40,
@@ -440,6 +452,7 @@ class _ProductPageState extends State<ProductPage> {
                       height: 54,
                       child: TextButton(
                         onPressed: () {
+                          cartProvider.addCart(widget.product);
                           showSuccessDialog();
                         },
                         style: TextButton.styleFrom(

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/product_model.dart';
 import 'package:myapp/widgets/chat_bubble.dart';
 import '../theme.dart';
 
 class DetailChatPage extends StatelessWidget {
-  const DetailChatPage({super.key});
+  // const DetailChatPage({super.key});
+
+  final ProductModel product;
+  DetailChatPage(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +128,9 @@ class DetailChatPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            productPreview(),
+            product is UninitializedProductModel
+                ? SizedBox()
+                : productPreview(),
             Row(
               children: [
                 Expanded(
